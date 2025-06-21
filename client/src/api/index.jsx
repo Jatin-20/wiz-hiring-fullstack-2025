@@ -11,11 +11,12 @@ export async function getEventById(id) {
   return res.json();
 }
 
-export async function bookSlot(eventId, slotTime) {
-  const res = await fetch(`${API_BASE_URL}/events/${eventId}/book`, {
+
+export async function bookSlot(eventId, slot, name, email) {
+  const res = await fetch(`${API_BASE_URL}/events/${eventId}/bookings`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ time: slotTime }),
+    body: JSON.stringify({ name, email, slot }),
   });
   if (!res.ok) throw new Error('Booking failed');
 }

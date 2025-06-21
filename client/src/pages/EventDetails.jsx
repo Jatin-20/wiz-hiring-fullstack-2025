@@ -7,6 +7,8 @@ function EventDetails() {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     async function loadEvent() {
@@ -24,10 +26,15 @@ function EventDetails() {
   }, [id]);
 
   const handleBooking = async (slotTime) => {
+    if (!name || !email) {
+      alert("Please fill in name and email.");
+      return;
+    }
+
     try {
-      await bookSlot(id, slotTime);
+      await bookSlot(event.id, slotTime, name, email);
       alert("Booking successful!");
-      window.location.reload(); // to update slot status
+      window.location.reload();
     } catch (err) {
       alert("Failed to book slot.");
     }
@@ -41,6 +48,22 @@ function EventDetails() {
     <div className="max-w-3xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">{event.title}</h2>
       <p className="mb-2 text-gray-700">{event.description}</p>
+
+      <div className="mt-4 space-y-4">
+        <input
+          className="border px-3 py-2 rounded w-full"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          className="border px-3 py-2 rounded w-full"
+          placeholder="Your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
       <div className="mt-6 space-y-3">
         {event.slots.map((slot, index) => (
           <div
