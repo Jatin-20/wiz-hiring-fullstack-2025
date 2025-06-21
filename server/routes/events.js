@@ -26,4 +26,27 @@ router.post('/', async (req, res) => {
   }
 });
 
+// GET /events — Return all created events
+router.get("/", async (req, res) => {
+    try {
+      const db = await initDB();
+  
+      const rows = await db.all("SELECT * FROM events");
+  
+      const events = rows.map(event => ({
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        maxBookingsPerSlot: event.maxBookingsPerSlot,
+        slots: JSON.parse(event.slots)
+      }));
+  
+      res.json(events);
+    } catch (error) {
+      console.error("Failed to fetch events:", error);
+      res.status(500).json({ error: "Could not retrieve events" });
+    }
+  });
+  
+
 export default router;
