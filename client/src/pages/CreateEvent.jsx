@@ -5,7 +5,8 @@ function CreateEvent() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [maxBookings, setMaxBookings] = useState(1);
-  const [slots, setSlots] = useState(['']);
+  const [slots, setSlots] = useState([]);
+  ;
   const navigate = useNavigate();
 
   const handleSlotChange = (value, index) => {
@@ -20,7 +21,13 @@ function CreateEvent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (slots.some(s => !s)) {
+      alert("Please fill all time slots.");
+      return;
+    }
+
     const formattedSlots = slots.map(s => new Date(s).toISOString());
+
 
     try {
       const res = await fetch(import.meta.env.VITE_API_URL + '/api/events', {
