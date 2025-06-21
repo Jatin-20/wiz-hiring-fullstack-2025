@@ -21,33 +21,39 @@ function Home() {
     loadEvents();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-center text-gray-600">Loading events...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">Available Events</h1>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6 text-center">Available Events</h1>
 
-      {events.length === 0 && <p>No events found.</p>}
-
-      <div className="grid gap-4">
-        {events.map((event) => (
-          <div key={event.id} className="bg-white shadow-md p-4 rounded border">
-            <h2 className="text-xl font-semibold">{event.title}</h2>
-            <p className="text-gray-700 mb-2">{event.description}</p>
-            <p className="text-sm text-gray-500">
-              Total Slots: {event.slots?.length || 0}
-            </p>
-            <Link
-              to={`/event/${event.id}`}
-              className="inline-block mt-3 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+      {events.length === 0 ? (
+        <p className="text-center text-gray-500">No events available.</p>
+      ) : (
+        <div className="grid gap-6">
+          {events.map((event) => (
+            <div
+              key={event.id}
+              className="border border-gray-300 shadow-sm rounded-lg p-5 hover:shadow-md transition-all"
             >
-              View Details
-            </Link>
-          </div>
-        ))}
-      </div>
+              <h2 className="text-xl font-semibold mb-2">{event.title}</h2>
+              <p className="text-gray-700">{event.description}</p>
+              <p className="text-sm text-gray-500 mt-2">
+                Total Slots: {event.slots?.length || 0}
+              </p>
+              <Link
+                to={`/event/${event.id}`}
+                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+              >
+                View Details
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
 
 export default Home;
