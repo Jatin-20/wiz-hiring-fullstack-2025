@@ -30,5 +30,7 @@ export const initDB = async () => {
     );
   `);
 
+
+  
   return db;
 };

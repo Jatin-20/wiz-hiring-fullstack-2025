@@ -16,7 +16,7 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("Server is running "));
 
 // Routes placeholder 
-app.use('/events', eventsRouter);
+app.use('/api/events', eventsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
