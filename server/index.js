@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import eventsRouter from './routes/events.js';
 
 dotenv.config();
 
@@ -15,9 +16,7 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("Server is running "));
 
 // Routes placeholder 
-app.use("/events", (req, res) => {
-  res.json({ message: "Events endpoint placeholder" });
-});
+app.use('/events', eventsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
