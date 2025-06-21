@@ -104,6 +104,8 @@ router.post("/:id/bookings", async (req, res) => {
     if (!name || !email || !slot) {
       return res.status(400).json({ error: "Missing required fields" });
     }
+
+    const normalizedSlot = new Date(slot).toISOString();
   
     try {
       const db = await initDB();
@@ -114,9 +116,9 @@ router.post("/:id/bookings", async (req, res) => {
         return res.status(404).json({ error: "Event not found" });
       }
   
-      const slots = JSON.parse(event.slots);
-  
-      if (!slots.includes(slot)) {
+      const eventSlots = JSON.parse(event.slots).map(s => new Date(s).toISOString()); // Normalize all event slots
+
+      if (!eventSlots.includes(normalizedSlot)) {
         return res.status(400).json({ error: "Invalid slot" });
       }
   
