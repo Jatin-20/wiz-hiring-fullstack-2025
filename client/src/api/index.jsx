@@ -22,7 +22,7 @@ export async function bookSlot(eventId, slot, name, email) {
 }
 
 export async function getBookingsByEmail(email) {
-  const res = await fetch(`${API_BASE_URL}/user/${email}/bookings`);
+  const res = await fetch(`${API_BASE_URL}/events/user/${email}/bookings`);
   if (!res.ok) throw new Error("Failed to fetch bookings");
   return res.json();
 }

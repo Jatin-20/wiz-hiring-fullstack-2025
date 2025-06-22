@@ -47,7 +47,8 @@ function MyBookings() {
         <ul className="space-y-4">
           {bookings.map((b, i) => (
             <li key={i} className="border p-4 rounded shadow-sm">
-              <p><strong>Event:</strong> {b.title}</p>
+              <p><strong>Event:</strong> {b.eventTitle}</p>
+              <p><strong>Name:</strong> {b.name}</p>
               <p><strong>Slot:</strong> {new Date(b.slot).toLocaleString()}</p>
             </li>
           ))}
