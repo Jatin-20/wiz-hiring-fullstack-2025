@@ -21,7 +21,7 @@ process.on("unhandledRejection", err => {
 
 // Middleware
 app.use(cors({
-  origin: "https://bookrino.vercel.app/", // replace with actual Vercel URL
+  origin: "bookrino-git-main-jatin-20s-projects.vercel.app", // replace with actual Vercel URL
   credentials: true, // optional, but good for cookies/auth
 }));
 
