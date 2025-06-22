@@ -30,18 +30,30 @@ router.post('/book', async (req, res) => {
   const { eventId, slotTime, name, email } = req.body;
 
   try {
-    // Fetch event title from DB (based on your logic)
-    const event = await Event.findById(eventId); // if using MongoDB
+    const db = await initDB();
 
-    // Save booking logic here...
-    
+    // Fetch event title
+    const event = await db.get('SELECT title FROM events WHERE id = ?', [eventId]);
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Insert booking
+    await db.run(
+      'INSERT INTO bookings (eventId, slot, name, email) VALUES (?, ?, ?, ?)',
+      [eventId, slotTime, name, email]
+    );
+
     // Send confirmation email
-    await sendConfirmationEmail(email, name, event.title, slotTime);
+    await sendConfirmationEmail(email, event.title, slotTime);
 
     res.status(200).json({ message: "Booked and email sent" });
   } catch (err) {
+    console.error("Booking error:", err);
     res.status(500).json({ message: "Failed to book" });
   }
 });
+
 
 export default router;
