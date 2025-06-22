@@ -3,6 +3,7 @@ import { getEvents } from '../api';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
+
 function Home() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +71,7 @@ function Home() {
                   </p>
                   {firstSlot && (
                     <p className="text-xs text-gray-500">
-                      Starts: {format(new Date(firstSlot), 'PPPp')}
+                    Starts: {new Date(firstSlot).toLocaleString()}
                     </p>
                   )}
                 </div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getEventById, bookSlot } from '../api';
+import { isValidEmail } from '../utils/validation';
+
 
 function EventDetails() {
   const { id } = useParams();
@@ -26,10 +28,20 @@ function EventDetails() {
   }, [id]);
 
   const handleBooking = async (slotTime) => {
-    if (!name || !email) {
-      alert("Please fill in name and email.");
+    if (!name.trim()) {
+      alert("Please enter your name.");
       return;
     }
+    
+    if (!email.trim()) {
+      alert("Please enter your email.");
+      return;
+    }
+    
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }    
 
     try {
       await bookSlot(event.id, slotTime, name, email);
