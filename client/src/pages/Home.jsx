@@ -21,32 +21,43 @@ function Home() {
     loadEvents();
   }, []);
 
-  if (loading) return <p className="text-center text-gray-600">Loading events...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64 text-gray-500 text-lg">
+        Loading events...
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Available Events</h1>
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold text-center mb-10 text-blue-800">Browse Events</h1>
 
       {events.length === 0 ? (
-        <p className="text-center text-gray-500">No events available.</p>
+        <p className="text-center text-gray-500">No events available yet.</p>
       ) : (
-        <div className="grid gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((event) => (
             <div
               key={event.id}
-              className="border border-gray-300 shadow-sm rounded-lg p-5 hover:shadow-md transition-all"
+              className="bg-white border border-gray-200 rounded-2xl shadow hover:shadow-md transition p-6 flex flex-col justify-between"
             >
-              <h2 className="text-xl font-semibold mb-2">{event.title}</h2>
-              <p className="text-gray-700">{event.description}</p>
-              <p className="text-sm text-gray-500 mt-2">
-                Total Slots: {event.slots?.length || 0}
-              </p>
-              <Link
-                to={`/event/${event.id}`}
-                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
-              >
-                View Details
-              </Link>
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">{event.title}</h2>
+                <p className="text-sm text-gray-600 mb-4">{event.description || 'No description provided.'}</p>
+              </div>
+
+              <div className="mt-auto">
+                <span className="inline-block mb-3 bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full">
+                  {event.slots?.length || 0} Slot{event.slots?.length === 1 ? '' : 's'}
+                </span>
+                <Link
+                  to={`/event/${event.id}`}
+                  className="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-medium"
+                >
+                  View Details
+                </Link>
+              </div>
             </div>
           ))}
         </div>

@@ -3,24 +3,36 @@ import { Link, useLocation } from 'react-router-dom';
 function Navbar() {
   const { pathname } = useLocation();
 
-  const linkClass = (path) =>
-    `px-4 py-2 rounded hover:bg-blue-100 ${
-      pathname === path ? 'bg-blue-200 font-semibold' : ''
-    }`;
+  const isActive = (path) => pathname === path;
 
   return (
-    <nav className="bg-white shadow-md mb-6">
-      <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold text-blue-600">
+    <nav className="bg-white shadow-md">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+        <Link to="/" className="text-2xl font-bold text-blue-700 tracking-tight">
           BOOKRINO
         </Link>
-        <div className="space-x-3 text-sm">
-          <Link to="/" className={linkClass('/')}>Home</Link>
-          <Link to="/create" className={linkClass('/create')}>Create Event</Link>
-          <Link to="/my-bookings" className={linkClass('/my-bookings')}>My Bookings</Link>
+        <div className="space-x-4 text-sm font-medium text-gray-700">
+          <NavLink to="/" label="Home" active={isActive('/')} />
+          <NavLink to="/create" label="Create Event" active={isActive('/create')} />
+          <NavLink to="/my-bookings" label="My Bookings" active={isActive('/my-bookings')} />
         </div>
       </div>
     </nav>
+  );
+}
+
+function NavLink({ to, label, active }) {
+  return (
+    <Link
+      to={to}
+      className={`px-3 py-1.5 rounded transition-all ${
+        active
+          ? 'bg-blue-100 text-blue-700 font-semibold border-b-2 border-blue-600'
+          : 'hover:bg-gray-100'
+      }`}
+    >
+      {label}
+    </Link>
   );
 }
 

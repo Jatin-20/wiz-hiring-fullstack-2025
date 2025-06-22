@@ -8,14 +8,16 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <Router>
-      <Navbar /> 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/event/:id" element={<EventDetails />} />
-        <Route path="/create" element={<CreateEvent />} />
-        <Route path="/my-bookings" element={<MyBookings />} />
-      </Routes>
-    </Router>
+      <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100">
+        <Navbar /> 
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/event/:id" element={<EventDetails />} />
+          <Route path="/create" element={<CreateEvent />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
+        </Routes>
+      </div>
+      </Router>
   );
 }
 
