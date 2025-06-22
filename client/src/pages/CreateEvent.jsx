@@ -30,7 +30,7 @@ function CreateEvent() {
 
 
     try {
-      const res = await fetch(import.meta.env.VITE_API_URL + '/api/events', {
+      const res = await fetch(import.meta.env.VITE_API_URL + '/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -62,7 +62,7 @@ function CreateEvent() {
           required
         />
         <textarea
-          placeholder="Description (optional)"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border px-3 py-2 rounded"
