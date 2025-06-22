@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getBookingsByEmail } from '../api';
+import { isValidEmail } from '../utils/validation';
 
 function MyBookings() {
   const [email, setEmail] = useState('');
@@ -8,6 +9,10 @@ function MyBookings() {
 
   const handleFetch = async () => {
     if (!email) return alert("Enter an email to search.");
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
     setLoading(true);
     try {

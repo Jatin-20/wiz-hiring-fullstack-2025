@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isFutureDateTime } from '../utils/validation';
 
 function CreateEvent() {
   const [title, setTitle] = useState('');
@@ -27,6 +28,11 @@ function CreateEvent() {
       alert("Please fill all time slots.");
       return;
     }
+  
+  if (slots.some(s => !isFutureDateTime(s))) {
+    alert("All time slots must be in the future.");
+    return;
+  }
 
     const formattedSlots = slots.map(s => new Date(s).toISOString());
 
@@ -114,6 +120,7 @@ function CreateEvent() {
               value={slot}
               onChange={(e) => handleSlotChange(e.target.value, idx)}
               className="w-full border px-3 py-2 rounded"
+              min={new Date().toISOString().slice(0, 16)}
               required
             />
           ))}

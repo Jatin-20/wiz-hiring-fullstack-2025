@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getEventById, bookSlot } from '../api';
 import { isValidEmail } from '../utils/validation';
+import { isValidName } from '../utils/validation';
 
 
 function EventDetails() {
@@ -32,6 +33,11 @@ function EventDetails() {
       alert("Please enter your name.");
       return;
     }
+
+    if (!isValidName(name)) {
+      alert("Please enter a valid name (only letters and spaces).");
+      return;
+    }  
     
     if (!email.trim()) {
       alert("Please enter your email.");
