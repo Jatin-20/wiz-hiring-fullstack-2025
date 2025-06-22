@@ -9,6 +9,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+console.log("Starting server...");
+
+process.on("uncaughtException", err => {
+  console.error("Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", err => {
+  console.error("Unhandled Rejection:", err);
+});
+
 // Middleware
 app.use(cors());
 app.use(express.json());
