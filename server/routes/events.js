@@ -5,7 +5,7 @@ const router = express.Router();
 
 // POST /events — Create a new event
 router.post('/', async (req, res) => {
-  const { title, description, maxBookingsPerSlot, slots } = req.body;
+  const { title, description, maxBookingsPerSlot, slots, creatorName } = req.body;
 
   // Basic validation
   if (!title || !slots || !Array.isArray(slots)) {
@@ -15,8 +15,8 @@ router.post('/', async (req, res) => {
   try {
     const db = await initDB();
     const result = await db.run(
-      'INSERT INTO events (title, description, maxBookingsPerSlot, slots) VALUES (?, ?, ?, ?)',
-      [title, description || '', maxBookingsPerSlot, JSON.stringify(slots)]
+      'INSERT INTO events (title, description, maxBookingsPerSlot, slots, creatorName) VALUES (?, ?, ?, ?, ?)',
+      [title, description || '', maxBookingsPerSlot, JSON.stringify(slots), creatorName || 'Anonymous']
     );
 
     res.status(201).json({ message: 'Event created', eventId: result.lastID });
@@ -38,7 +38,8 @@ router.get("/", async (req, res) => {
         title: event.title,
         description: event.description,
         maxBookingsPerSlot: event.maxBookingsPerSlot,
-        slots: JSON.parse(event.slots)
+        slots: JSON.parse(event.slots),
+        creatorName: event.creatorName || 'Anonymous'
       }));
   
       res.json(events);
@@ -88,7 +89,8 @@ router.get("/:id", async (req, res) => {
         title: event.title,
         description: event.description,
         maxBookingsPerSlot: event.maxBookingsPerSlot,
-        slots: slotsWithStatus
+        slots: slotsWithStatus,
+        creatorName: event.creatorName || 'Anonymous',
       });
     } catch (err) {
       console.error("Error fetching event details:", err);

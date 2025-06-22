@@ -6,6 +6,8 @@ function CreateEvent() {
   const [description, setDescription] = useState('');
   const [maxBookings, setMaxBookings] = useState(1);
   const [slots, setSlots] = useState([]);
+  const [creatorName, setCreatorName] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   ;
   const navigate = useNavigate();
 
@@ -38,21 +40,46 @@ function CreateEvent() {
           description,
           maxBookingsPerSlot: Number(maxBookings),
           slots: formattedSlots,
+          creatorName,
         }),
       });
 
       if (!res.ok) throw new Error('Failed to create event');
-      alert('Event created!');
-      navigate('/');
+      const data = await res.json();
+      setSuccessMessage(`🎉 Event "${title}" created successfully! ID: ${data.eventId}`);
+      setTitle('');
+      setDescription('');
+      setMaxBookings(1);
+      setSlots([]);
+      
+      setTimeout(() => {
+        navigate('/');
+      }, 1500);
     } catch (err) {
+      console.error("Event creation failed:", err);
       alert('Something went wrong!');
-    }
+    }    
   };
 
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">Create New Event</h2>
+      {successMessage && (
+        <div className="bg-green-100 text-green-800 px-4 py-3 rounded mb-4 border border-green-300">
+          {successMessage}
+        </div>
+        )
+      }
       <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+        type="text"
+        placeholder="Creator Name"
+        value={creatorName}
+        onChange={(e) => setCreatorName(e.target.value)}
+        className="w-full border px-3 py-2 rounded"
+        required
+        />
+
         <input
           type="text"
           placeholder="Event Title"
@@ -61,6 +88,7 @@ function CreateEvent() {
           className="w-full border px-3 py-2 rounded"
           required
         />
+        
         <textarea
           placeholder="Description"
           value={description}

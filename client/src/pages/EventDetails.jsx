@@ -46,7 +46,8 @@ function EventDetails() {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">{event.title}</h2>
+      <h2 className="text-2xl font-bold mb-1">{event.title}</h2>
+      <p className="text-sm text-gray-500 mb-4">Created by: {event.creatorName?.trim() ? event.creatorName : 'Unknown'}</p>
       <p className="mb-2 text-gray-700">{event.description}</p>
 
       <div className="mt-4 space-y-4">

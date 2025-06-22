@@ -14,7 +14,8 @@ export const initDB = async () => {
       title TEXT NOT NULL,
       description TEXT,
       maxBookingsPerSlot INTEGER,
-      slots TEXT
+      slots TEXT,
+      creatorName TEXT
     );
   `);
 
