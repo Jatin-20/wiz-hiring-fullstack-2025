@@ -152,5 +152,28 @@ router.post("/:id/bookings", async (req, res) => {
     }
   });
 
+// GET /events/user/:email/bookings — View all bookings by a user
+router.get('/user/:email/bookings', async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const db = await initDB();
+
+    const bookings = await db.all(
+      `SELECT b.id, b.name, b.email, b.slot, e.title as eventTitle
+       FROM bookings b
+       JOIN events e ON b.eventId = e.id
+       WHERE b.email = ?
+       ORDER BY b.slot ASC`,
+      [email]
+    );
+
+    res.json(bookings);
+  } catch (err) {
+    console.error("Error fetching user bookings:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
   
 export default router;

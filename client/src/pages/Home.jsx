@@ -27,12 +27,20 @@ function Home() {
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Available Events</h1>
-        <Link
-          to="/create"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          + Create Event
-        </Link>
+        <div className="space-x-2">
+          <Link
+            to="/create"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            + Create Event
+          </Link>
+          <Link
+            to="/my-bookings"
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+          >
+            View My Bookings
+          </Link>
+        </div>
       </div>
 
       {events.length === 0 ? (
@@ -62,6 +70,5 @@ function Home() {
     </div>
   );
 }
-
 
 export default Home;

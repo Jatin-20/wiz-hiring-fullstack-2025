@@ -20,3 +20,10 @@ export async function bookSlot(eventId, slot, name, email) {
   });
   if (!res.ok) throw new Error('Booking failed');
 }
+
+export async function getBookingsByEmail(email) {
+  const res = await fetch(`${API_BASE_URL}/users/${email}/bookings`);
+  if (!res.ok) throw new Error("Failed to fetch bookings");
+  return res.json();
+}
+
