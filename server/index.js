@@ -20,10 +20,21 @@ process.on("unhandledRejection", err => {
 });
 
 // Middleware
+
+const allowedOrigins = [
+  "https://bookrino-git-main-jatin-20s-projects.vercel.app"
+];
+
 app.use(cors({
-  origin: "bookrino-git-main-jatin-20s-projects.vercel.app", // replace with actual Vercel URL
-  credentials: true, // optional, but good for cookies/auth
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
 }));
+
 
 app.use(express.json());
 
